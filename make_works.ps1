@@ -3,6 +3,8 @@
 # 1. Put photos in works-src\ and name each one "DATE Title", for example
 #      2023 Snub cube.jpg      2021-06 Rhombic triacontahedron.png      Untitled sphere.jpg
 #    The date (year, or year-month) is optional. The order is newest first.
+#    To set the order yourself, put a number in front: "1pentakis_dodecahedron.jpg", "2 Snub cube.jpg".
+#    The number is not shown (the title still starts with a capital) and numbered works come first.
 #    Put each one in works-src\recent or works-src\early; that decides its group on the page.
 #    Videos (.mp4 .mov .m4v .webm .avi .mkv) work too: the square shows a still and plays when pointed at.
 #    Videos are used as they are; with ffmpeg installed (winget install Gyan.FFmpeg) they are also shrunk.
@@ -73,11 +75,14 @@ $files = Get-ChildItem $src -File -Recurse | Where-Object { $_.Extension -match 
 foreach ($f in $files) {
   $group = if ($f.DirectoryName -eq $src) { 'recent' } else { $f.Directory.Name.ToLower() }
   $isVideo = $f.Extension -match '^\.(mp4|mov|m4v|webm|avi|mkv)$'
-  $date = ''; $title = $f.BaseName
-  if ($f.BaseName -match '^(\d{4}(?:-\d{2}){0,2})\s+(.+)$') { $date = $Matches[1]; $title = $Matches[2] }
+  $date = ''; $title = $f.BaseName; $order = 100000
+  # optional order number glued to the front: "1pentakis_dodecahedron" -> order 1, title "Pentakis dodecahedron"
+  if ($title -match '^(\d{1,3})(?!\d)[ _.\-]?(.+)$') { $order = [int]$Matches[1]; $title = $Matches[2] }
+  $name = $title                                     # file name without the order number
+  if ($title -match '^(\d{4}(?:-\d{2}){0,2})\s+(.+)$') { $date = $Matches[1]; $title = $Matches[2] }
   $title = $title -replace '_', ' '
   $title = $title.Substring(0, 1).ToUpper() + $title.Substring(1)
-  $slug = (($f.BaseName.ToLower() -replace '[^a-z0-9]+', '-').Trim('-'))
+  $slug = (($name.ToLower() -replace '[^a-z0-9]+', '-').Trim('-'))   # renumbering keeps the same file names
   if (-not $slug) { $slug = 'work' }
   while ($keep.ContainsKey("$slug.jpg")) { $slug += '-2' }
   $keep["$slug.jpg"] = $true
@@ -94,16 +99,20 @@ foreach ($f in $files) {
   }
   $item = [ordered]@{ title = $title; date = $date; group = $group; thumb = "works/thumb/$slug.jpg"; full = "works/full/$slug.$ext" }
   if ($pos.ContainsKey($f.BaseName)) { $item.pos = "50% $($pos[$f.BaseName])%" }
+  elseif ($pos.ContainsKey($name)) { $item.pos = "50% $($pos[$name])%" }
   if ($isVideo) {
     if (Test-Path $v) { $item.video = "works/preview/$slug.mp4" } else { $item.video = $item.full; $item.thumb = '' }
   }
-  $items += [pscustomobject]$item
+  $sortKey = $order
+  $items += [pscustomobject]$item | Add-Member -NotePropertyName _order -NotePropertyValue $sortKey -PassThru
 }
 # drop copies whose original was removed or renamed
 foreach ($d in $thumbDir, $fullDir, $previewDir) {
   Get-ChildItem $d -File | Where-Object { -not $keep.ContainsKey($_.Name) } | Remove-Item
 }
-$items = @($items | Sort-Object @{ Expression = 'date'; Descending = $true }, title)
+# numbered works first, in number order; then the rest, newest first, then by title
+$items = @($items | Sort-Object _order, @{ Expression = 'date'; Descending = $true }, title |
+           Select-Object -Property * -ExcludeProperty _order)
 $json = ConvertTo-Json -InputObject $items
 if ($items.Count -eq 0) { $json = '[]' }
 [IO.File]::WriteAllText((Join-Path $root 'works.json'), $json, (New-Object Text.UTF8Encoding $false))
