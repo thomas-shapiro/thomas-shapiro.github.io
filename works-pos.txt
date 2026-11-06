@@ -1,0 +1,10 @@
+# Framing of a tall video (or photo) inside its square, used by make_works.ps1.
+# One line per work: the file name without its extension, then a number from 0 to 100.
+#   50 = middle (the default). A lower number moves the object down in the square, a higher one moves it up.
+# Rerun make_works.bat after a change.
+
+rhombic_dodecahedron_(chipwood)       40
+rhombic_triacontahedron_(chipwood)    60
+noble_faceting_of the_snub cube       30
+near-equiareal_32-hedron              60
+two_dodecahedra                       70

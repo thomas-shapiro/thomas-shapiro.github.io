@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thomas Shapiro</title>
+<meta name="description" content="Thomas Shapiro: polyhedra, polytopes and mathematical art.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="text">
+    <header>
+      <h1><a href="#">Thomas Shapiro</a></h1>
+      <p class="tag">I create all sorts of things, but mostly math art.</p>
+    </header>
+
+    <nav>
+      <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
+      <a href="#works">Works</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="home" class="pane">
+      <p>Over the past ~8 years I have participated in various projects, created countless physical and digital models of geometric shapes, and carried out several formal mathematical research projects. I am currently studying Robotics &amp; AI at AAU, Austria.</p>
+    </section>
+
+    <section id="projects" class="pane">
+      <h2>Projects:</h2>
+      <!-- Popups: edit the text inside each <span class="pop">…</span>. Delete the span for no popup. -->
+      <ul class="list">
+        <li><a href="https://asliceofcuriosity.fr/blog/posts/geometry18.html#byTomShapiroNMJ">Canonical Near-miss Johnson solids (2026)</a>.<span class="pop">A census of convex polyhedra that almost have regular faces, measured in their canonical form. Hosted on Wagyx Xygaw's blog.</span></li>
+        <li><a href="https://thomas-shapiro.github.io/catalan-like-solid-viewer/">Catalan-like Polyhedra (2026)</a>.<span class="pop">An interactive viewer for Catalan-like polyhedra produced by stellating fullerenes. Rotate, morph, compare, download.</span></li>
+	<li><a href="https://thomas-shapiro.github.io/equal-earth/">Equal Earth (2026)</a>.<span class="pop">An interactive viewer for a sphere divided into 195 segments of equal area. Each segment corresponds to a country on Earth. The project is purely art, not political.</span></li>
+        <li><a href="https://cults3d.com/en/users/Alphabetical_Dice/3d-models">Alphabetical Dice (2023)</a>.<span class="pop">Fair or near-fair specialty dice with all sorts of weird things on them. All models are available for free.</span></li>
+	<li><a href="https://polytope.miraheze.org/wiki/List_of_noble_polyhedra">A visual index of all noble polyhedra (2023)</a>.<span class="pop">I designed the big table that features all 146 non-exotic finite noble polyhedra as well as the infinite families. No noble polyhedron was discovered by me, although I was somewhat involved in the process: I provided images and mapped out the convex hull and duality relationships between all noble polyhedra. Connor Hill is the author of the completeness proof.</span></li>
+        <li><a href="https://polytope.miraheze.org/wiki/List_of_near-miss_uniform_polytopes">Near-miss uniform polytopes (2021)</a>.<span class="pop">A non-exhaustive list of isogonal polytopes with near-equal edge lengths that do not become degenerate when the edge length ratio is minimized.</span></li>
+	<li><a href="https://www.youtube.com/@horizontalhold854">My old YouTube channel (2021)</a>.<span class="pop">A small teenage project of mine.</span></li>
+      </ul>
+    </section>
+
+    <section id="research" class="pane">
+      <h2>Research:</h2>
+      <ul class="list">
+        <li><a href="https://www.researchgate.net/publication/408475450_A_Generalization_of_Catalan_Solids">A Generalization of Catalan Solids</a>.</li>
+	<li><a href="https://www.researchgate.net">Sesquitruncation (WIP)</a>.</li>
+	<li><a href="https://www.researchgate.net">Canonical Near-Miss Johnson's Solids (WIP)</a>.</li>
+      </ul>
+    </section>
+
+    <section id="works" class="pane">
+      <h2>Works:</h2>
+      <div class="wgroup">
+        <h3>Recent works (2022–present)</h3>
+        <div class="grid" data-group="recent"></div>
+      </div>
+      <div class="wgroup">
+        <h3>Early works (2018–2022)</h3>
+        <div class="grid" data-group="early"></div>
+      </div>
+    </section>
+
+    <section id="contact" class="pane">
+      <h2>Contact:</h2>
+      <p>thomassh@edu.at , thomas.shapiro.study@gmail.com</p>
+    </section>
+
+    <footer>Last updated 6 November 2026.</footer>
+  </div>
+
+  <figure class="figure">
+    <div id="globe" aria-label="Equal Earth: a sphere divided into 195 equal-area segments, one per country">
+      <p id="globe-status">Loading…</p>
+    </div>
+    <figcaption>
+      <a href="https://thomas-shapiro.github.io/equal-earth/">Equal Earth</a>: 195 segments of equal area,
+      one for each country.
+    </figcaption>
+  </figure>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script src="site.js"></script>
+<script type="module" src="globe.js"></script>
+</body>
+</html>
